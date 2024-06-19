@@ -38,6 +38,10 @@ class Director(models.Model):
 class Genre(models.Model):
     label = models.CharField(max_length=100)
     slug = models.CharField(max_length=100)
+
+    class Meta:
+        ordering = ('label',)
+        
     def __str__(self):
         return self.label
 
