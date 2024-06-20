@@ -1,7 +1,7 @@
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from .models import Movie, Genre, Country
-from .serializers import Movie_serializer, Genre_serializer, Country_serializer
+from .serializers import Movie_serializer, Movie_detailed_serializer, Genre_serializer, Country_serializer
 
 # All films
 @api_view(['GET'])
@@ -14,7 +14,7 @@ def get_movies(request):
 @api_view(['GET'])
 def get_movie(request, slug):
     movie = Movie.objects.get(slug=slug)
-    serializer = Movie_serializer(movie)
+    serializer = Movie_detailed_serializer(movie)
     return Response(serializer.data)
 
 # One random film

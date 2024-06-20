@@ -1,6 +1,6 @@
 from django.db import models
 from django.conf import settings
-
+from django.db.models import Avg
 
 class Region(models.Model):
     name = models.CharField(max_length=100)
@@ -80,3 +80,10 @@ class Movie(models.Model):
             return settings.WEBSITE_URL + self.image.url
         else:
             return 'https://placehold.co/600x400'
+        
+    # Calculate the average rating
+    def average_rating(self) -> float:
+        return self.votes.aggregate(Avg("rating"))["rating__avg"] or 0
+
+    def number_of_votes(self):
+        return self.votes.count()

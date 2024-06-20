@@ -1,12 +1,17 @@
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 
-from .models import Avatar, UserFavorite
+from .models import Avatar, UserFavorite, Vote
 from movie.models import Movie
 
-from .serializers import Avatar_serializer, User_favorites_serializer
+from .serializers import Avatar_serializer, Vote_serializer, User_Avatar_serializer
 from movie.serializers import Movie_serializer
 
+# @api_view(['GET'])
+# def get_personal_information(request):
+#     user = request.user
+#     serializer = User_Avatar_serializer(user)
+#     return Response(serializer.data)
 
 @api_view(['GET'])
 @authentication_classes([])
@@ -22,7 +27,7 @@ def get_my_favorites(request):
     favorites = UserFavorite.objects.filter(user=request.user.id)
     my_favorite_movies = []
 
-    # Filter les movies dont la pk est inclus dans la liste des favorites, dans leur movie.id
+    # Filtrer les movies dont la pk est inclus dans la liste des favorites, dans leur movie.id
     for favorite in favorites:
         movie = Movie.objects.get(pk=favorite.movie.id)
         if movie:
@@ -57,3 +62,26 @@ def remove_a_favorite(request, movie_id):
     
     favorites[0].delete()
     return Response({ 'message' : 'Favorite removed successfully' })
+
+
+# Return all ratings from current user (to check if he already voted)
+@api_view(['GET'])
+def get_all_user_ratings(request):
+    votes = Vote.objects.filter(created_by=request.user)
+    serializer = Vote_serializer(votes, many=True)
+    return Response(serializer.data)
+
+
+# Process a vote
+@api_view(['POST'])
+def rate_movie(request, movie_id):
+    movie = Movie.objects.get(pk=movie_id)
+    data = request.data
+    Vote.objects.create(
+        movie=movie,
+        created_by=request.user,
+        comment=data.get('comment'),
+        rating=int(data.get('rating'))
+    )
+
+    return Response({ 'message' : 'You have voted!'})
