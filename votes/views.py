@@ -4,7 +4,7 @@ from rest_framework.decorators import api_view, authentication_classes, permissi
 from .models import Avatar, UserFavorite, Vote
 from movie.models import Movie
 
-from .serializers import Avatar_serializer, Vote_serializer, User_Avatar_serializer
+from .serializers import Avatar_serializer, Vote_serializer
 from movie.serializers import Movie_serializer
 
 # @api_view(['GET'])

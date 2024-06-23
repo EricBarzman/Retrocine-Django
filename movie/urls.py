@@ -3,6 +3,7 @@ from . import views
 
 urlpatterns = [
     path('index/', views.get_movies),
+    path('search/', views.search_for_movies),
     path('random/', views.get_random_movie),
     path('index/<slug:slug>/', views.get_movie),
     path('genre/', views.get_genres),

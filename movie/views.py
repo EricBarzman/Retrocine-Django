@@ -17,6 +17,15 @@ def get_movie(request, slug):
     serializer = Movie_detailed_serializer(movie)
     return Response(serializer.data)
 
+# Search by keyword
+@api_view(['POST'])
+def search_for_movies(request):
+    data = request.data
+    movies = Movie.objects.filter(title__icontains=data.get('searchInput'))
+    serializer = Movie_serializer(movies, many=True)
+    return Response(serializer.data)
+
+
 # One random film
 @api_view(['GET'])
 def get_random_movie(request):
