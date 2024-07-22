@@ -1,16 +1,11 @@
 from rest_framework import serializers
-from .models import Vote, Avatar, UserFavorite, User_Info
+from .models import Vote, Avatar, UserFavorite, Profile
 from django.contrib.auth.models import User
 
 class User_Serializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id','username')
-
-class User_detail_serializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = ('id', 'username', 'email')
+        fields = ('id','username', 'email')
 
 
 class Avatar_serializer(serializers.ModelSerializer):
@@ -18,6 +13,13 @@ class Avatar_serializer(serializers.ModelSerializer):
         model = Avatar
         fields = ('id', 'label', 'get_image')
 
+
+class User_detail_serializer(serializers.ModelSerializer):
+    user = User_Serializer(many=False)
+    avatar = Avatar_serializer(many=False)
+    class Meta:
+        model = Profile
+        fields = ('user', 'avatar', 'about')
 
 
 class User_favorites_serializer(serializers.ModelSerializer):

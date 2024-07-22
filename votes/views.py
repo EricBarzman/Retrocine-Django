@@ -1,17 +1,12 @@
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 
-from .models import Avatar, UserFavorite, Vote
+from .models import Avatar, UserFavorite, Vote, Profile
 from movie.models import Movie
 
-from .serializers import Avatar_serializer, Vote_serializer
+from .serializers import Avatar_serializer, Vote_serializer, User_detail_serializer
 from movie.serializers import Movie_serializer
 
-# @api_view(['GET'])
-# def get_personal_information(request):
-#     user = request.user
-#     serializer = User_Avatar_serializer(user)
-#     return Response(serializer.data)
 
 @api_view(['GET'])
 @authentication_classes([])
@@ -20,6 +15,7 @@ def get_avatars(request):
     avatars = Avatar.objects.all()
     serializer = Avatar_serializer(avatars, many=True)
     return Response(serializer.data)
+
 
 
 @api_view(['GET'])
@@ -64,12 +60,14 @@ def remove_a_favorite(request, movie_id):
     return Response({ 'message' : 'Favorite removed successfully' })
 
 
+
 # Return all ratings from current user (to check if he already voted)
 @api_view(['GET'])
 def get_all_user_ratings(request):
     votes = Vote.objects.filter(created_by=request.user)
     serializer = Vote_serializer(votes, many=True)
     return Response(serializer.data)
+
 
 
 # Process a vote
@@ -85,3 +83,15 @@ def rate_movie(request, movie_id):
     )
 
     return Response({ 'message' : 'You have voted!'})
+
+
+@api_view(['GET'])
+def get_user_infos(request):
+    profile = Profile.objects.get(user=request.user.id)  
+    serializer = User_detail_serializer(profile)
+    return Response(serializer.data)
+
+
+@api_view(['POST'])
+def change_avatar(request):
+    return Response({ 'message' : 'Successful' })

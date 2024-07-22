@@ -2,6 +2,7 @@ from rest_framework import serializers
 from .models import Movie, Country, Director, Keyword, Genre
 from votes.serializers import Vote_serializer
 
+
 class Country_serializer(serializers.ModelSerializer):
     class Meta:
         model = Country
@@ -26,6 +27,7 @@ class Keyword_serializer(serializers.ModelSerializer):
         fields = ('id', 'label')
 
 
+
 class Movie_serializer(serializers.ModelSerializer):
     director = Director_serializer(many=False)
     country = Country_serializer(many=False)
@@ -42,6 +44,7 @@ class Movie_serializer(serializers.ModelSerializer):
         )
 
 
+# Like previous, plus ALL the votes associated !
 class Movie_detailed_serializer(serializers.ModelSerializer):
     director = Director_serializer(many=False)
     country = Country_serializer(many=False)

@@ -18,6 +18,7 @@ class Vote(models.Model):
         ordering = ('-created_at',)
 
 
+
 class Avatar(models.Model):
     label = models.CharField(max_length=255)
     image = models.ImageField(upload_to='avatars', blank=True, null=True)
@@ -33,9 +34,12 @@ class Avatar(models.Model):
 
 
 
-class User_Info(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    avatar = models.ForeignKey(Avatar, related_name='avatar', blank=True, null=True, on_delete=models.SET_NULL)
+# Extending User Model Using a One-To-One Link
+class Profile(models.Model):
+    user = models.OneToOneField(User, related_name='profile', on_delete=models.CASCADE)
+    avatar = models.ForeignKey(Avatar, blank=True, null=True, on_delete=models.SET_NULL)
+    about = models.CharField(max_length=255, null=True)
+    
     def __str__(self):
         return self.user.username
 
