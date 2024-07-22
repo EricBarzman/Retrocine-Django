@@ -1,5 +1,9 @@
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
+from rest_framework.authtoken.models import Token
+
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate
 
 from .models import Avatar, UserFavorite, Vote, Profile
 from movie.models import Movie
@@ -84,9 +88,59 @@ def rate_movie(request, movie_id):
 
     return Response({ 'message' : 'You have voted!'})
 
+@api_view(['POST'])
+@authentication_classes([])
+@permission_classes([])
+def signup(request):
+    data = request.data
+    
+    if User.objects.filter(email=data.get('email')).exists():
+        return Response({ 'error': 'This email is already taken'}, status=500)
+    
+    user = User.objects.create_user(
+        username=data.get('username'),
+        email=data.get('email'),
+        password=data.get('password')
+    )
+    avatar=Avatar.objects.get(pk=data.get('avatar'))
+    Profile.objects.create(
+        user=user,
+        avatar=avatar
+    )
+
+    return Response({ 'message' : 'User successfully created'}, status=200)
+
+
+# @api_view(['POST'])
+# @authentication_classes([])
+# @permission_classes([])
+# def login(request):
+#     data = request.data
+
+#     # Authenticate user
+#     user = authenticate(
+#         username=data.get('username'),
+#         password=data.get('password'),
+#     )
+
+#     # Find associated profile
+#     profile = Profile.objects.get(user=user)
+
+#     # Serialize profile (and user infos)
+#     profile_serialized = User_detail_serializer(profile)
+
+#     # Create a token, add it to serialized profile
+#     token = Token.objects.create(user=user)
+    
+#     if user is not None:
+#         return Response({ profile_serialized.data, token }, status=200)
+
+#     return Response({ 'error': 'No user found with these credentials' })
+
 
 @api_view(['GET'])
 def get_user_infos(request):
+    print('user infos!!!')
     profile = Profile.objects.get(user=request.user.id)  
     serializer = User_detail_serializer(profile)
     return Response(serializer.data)
@@ -94,4 +148,8 @@ def get_user_infos(request):
 
 @api_view(['POST'])
 def change_avatar(request):
-    return Response({ 'message' : 'Successful' })
+    profile = Profile.objects.get(user=request.user.id)
+    new_avatar_id = request.data.get('avatar')
+    profile.avatar = new_avatar_id
+    profile.save()
+    return Response({ 'message' : 'Avatar chanded!' })

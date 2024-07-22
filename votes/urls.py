@@ -10,4 +10,5 @@ urlpatterns = [
     path('my-favorites/remove/<int:movie_id>', views.remove_a_favorite),
     path('user-infos/', views.get_user_infos),
     path('change-avatar/', views.change_avatar),
+    path('signup/', views.signup),
 ]
