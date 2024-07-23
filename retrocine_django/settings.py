@@ -13,7 +13,7 @@ SECRET_KEY = 'django-insecure-8+7i3*474ub1-*o)@6g357db5ht26e5j36cfstbh19o5+mg4!w
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [".vercel.app"]
+ALLOWED_HOSTS = [".vercel.app", "localhost"]
 
 WEBSITE_URL = 'https://retrocine-django.vercel.app'
 
