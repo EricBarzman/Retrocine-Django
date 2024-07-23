@@ -149,7 +149,10 @@ def get_user_infos(request):
 @api_view(['POST'])
 def change_avatar(request):
     profile = Profile.objects.get(user=request.user.id)
+    
     new_avatar_id = request.data.get('avatar')
-    profile.avatar = new_avatar_id
+    new_avatar = Avatar.objects.get(pk=new_avatar_id)
+    
+    profile.avatar = new_avatar
     profile.save()
     return Response({ 'message' : 'Avatar chanded!' })
