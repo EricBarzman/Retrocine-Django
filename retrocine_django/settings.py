@@ -1,4 +1,3 @@
-
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -14,7 +13,7 @@ SECRET_KEY = 'django-insecure-8+7i3*474ub1-*o)@6g357db5ht26e5j36cfstbh19o5+mg4!w
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [".vercel.app", ".now.sh"]
 
 WEBSITE_URL = 'http://127.0.0.1:8000/'
 
