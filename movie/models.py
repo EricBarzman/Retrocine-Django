@@ -49,7 +49,7 @@ class Genre(models.Model):
 class Movie(models.Model):
     title = models.CharField(max_length=255)
     slug = models.SlugField()
-    year = models.IntegerField()
+    year = models.PositiveIntegerField()
     country = models.ForeignKey(Country, related_name='movies', on_delete=models.SET_NULL, blank=True, null=True)
     genre = models.ForeignKey(Genre, related_name='movies', on_delete=models.SET_NULL, blank=True, null=True)
     director = models.ForeignKey(Director, related_name='movies', on_delete=models.SET_NULL, null=True)
