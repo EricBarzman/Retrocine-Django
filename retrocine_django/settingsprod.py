@@ -93,8 +93,8 @@ WSGI_APPLICATION = 'retrocine_django.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'projectone',
-        'USER': 'projectoneuser',
+        'NAME': 'retrocine',
+        'USER': 'retrocine',
         'PASSWORD': os.environ.get('DB_PASSWORD', ''),
         'HOST': 'localhost',
         'PORT': '',
