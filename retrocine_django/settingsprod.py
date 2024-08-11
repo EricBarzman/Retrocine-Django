@@ -1,6 +1,7 @@
 from pathlib import Path
 import os
 from dotenv import load_dotenv
+import dj_database_url
 
 load_dotenv()
 
@@ -91,14 +92,10 @@ WSGI_APPLICATION = 'retrocine_django.wsgi.application'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'retrocine',
-        'USER': 'retrocine',
-        'PASSWORD': os.environ.get('DB_PASSWORD', ''),
-        'HOST': 'dpg-cqsh8elumphs73d0a0c0-a',
-        'PORT': '5432',
-    }
+    'default': dj_database_url.config(
+        default='postgresql://retrocine:1QSxPM90kN3no3fkDjdUrrQCQrHecrHw@dpg-cqsh8elumphs73d0a0c0-a/retrocine'
+        conn_max_age=600
+    )
 }
 
 # DATABASES = {
