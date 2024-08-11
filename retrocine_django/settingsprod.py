@@ -16,7 +16,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', '')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = [".vercel.app", "localhost", ".now.sh"]
+ALLOWED_HOSTS = [".vercel.app", "localhost", ".now.sh", "retrocine-django-1.onrender.com"]
 
 REST_FRAMEWORK = {
     'DATETIME_FORMAT': '%d/%m/%Y %H:%M',
