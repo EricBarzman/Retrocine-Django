@@ -96,7 +96,7 @@ DATABASES = {
         'NAME': 'retrocine',
         'USER': 'retrocine',
         'PASSWORD': os.environ.get('DB_PASSWORD', ''),
-        'HOST': 'localhost',
+        'HOST': 'dpg-cqsh8elumphs73d0a0c0-a',
         'PORT': '5432',
     }
 }
