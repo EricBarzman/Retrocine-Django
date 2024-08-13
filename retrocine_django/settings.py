@@ -93,7 +93,14 @@ WSGI_APPLICATION = 'retrocine_django.wsgi.application'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASES = {
-    'default': dj_database_url.config(os.environ.get('DATABASE_URL'))
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'retrocine',
+        'USER': 'retrocine',
+        'PASSWORD': os.environ.get('DB_PASSWORD', ''),
+        'HOST': 'dpg-cqsh8elumphs73d0a0c0-a',
+        'PORT': '5432',
+    }
 }
 
 # DATABASES = {
